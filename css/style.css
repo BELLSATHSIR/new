@@ -9,6 +9,15 @@
   --transition: all 0.3s ease;
 }
 
+body.light-theme {
+  --primary-color: #f8fafc;
+  --secondary-color: #ffffff;
+  --accent-color: #e2e8f0;
+  --text-color: #111827;
+  --text-secondary: #475569;
+  --highlight-color: #0ea5e9;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -43,6 +52,10 @@ body {
   backdrop-filter: blur(10px);
   z-index: 100;
   transition: var(--transition);
+}
+
+body.light-theme .navbar {
+  background-color: rgba(255, 255, 255, 0.92);
 }
 
 .nav-container {
@@ -91,6 +104,10 @@ body {
   font-size: 1.2rem;
   cursor: pointer;
   transition: var(--transition);
+}
+
+.theme-toggle .sun-icon {
+  display: none;
 }
 
 .theme-toggle:hover {
