@@ -98,12 +98,20 @@ body.light-theme .navbar {
 }
 
 .theme-toggle {
-  background: none;
-  border: none;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--text-color);
   font-size: 1.2rem;
   cursor: pointer;
   transition: var(--transition);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 .theme-toggle .sun-icon {
@@ -112,6 +120,17 @@ body.light-theme .navbar {
 
 .theme-toggle:hover {
   color: var(--highlight-color);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+}
+
+.theme-toggle i {
+  pointer-events: none;
+}
+
+body.light-theme .theme-toggle {
+  background: rgba(17, 24, 39, 0.16);
+  border-color: rgba(236, 72, 153, 0.22);
 }
 
 .hamburger {
@@ -831,14 +850,26 @@ body.light-theme .navbar {
   color: white;
   text-decoration: none;
   font-size: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
   transition: var(--transition);
   z-index: 100;
+  animation: whatsappGlow 2.5s ease-in-out infinite;
 }
 
 .whatsapp-float:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.5);
+}
+
+@keyframes whatsappGlow {
+  0%, 100% {
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35), 0 0 25px rgba(37, 211, 102, 0.2);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 8px 26px rgba(37, 211, 102, 0.45), 0 0 35px rgba(37, 211, 102, 0.3);
+    transform: translateY(-2px);
+  }
 }
 
 /* Responsive Design */
