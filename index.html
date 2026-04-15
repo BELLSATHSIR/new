@@ -1,567 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BELLSATH — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --white: #ffffff;
-    --black: #000000;
-    --neutral-100: #f5f5f5;
-    --neutral-400: #a3a3a3;
-    --neutral-600: #525252;
-    --neutral-800: #1a1a1a;
-    --neutral-900: #111111;
-    --accent: #e8e8e8;
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-  }
-
-  /* ── NAVBAR ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-    padding: 20px 48px;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background 0.4s ease, backdrop-filter 0.4s ease;
-  }
-  nav.scrolled {
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 0.5px solid rgba(255,255,255,0.08);
-  }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 1rem; font-weight: 800;
-    letter-spacing: 0.15em; color: var(--white);
-    text-decoration: none;
-  }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a {
-    font-size: 0.78rem; color: var(--neutral-400);
-    text-decoration: none; letter-spacing: 0.06em;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--white); }
-  .nav-cta {
-    font-size: 0.78rem !important; color: var(--white) !important;
-    border: 0.5px solid rgba(255,255,255,0.3) !important;
-    padding: 8px 20px; border-radius: 999px;
-    transition: background 0.2s, color 0.2s !important;
-  }
-  .nav-cta:hover { background: var(--white) !important; color: var(--black) !important; }
-  .nav-hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-  .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: 0.3s; }
-
-  /* ── HERO ── */
-  #hero {
-    height: 100vh; min-height: 600px;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center; padding: 24px;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 60% 40%, #1c1c1c 0%, #000 70%);
-    animation: heroPulse 8s ease-in-out infinite alternate;
-  }
-  @keyframes heroPulse {
-    from { background: radial-gradient(ellipse at 60% 40%, #1c1c1c 0%, #000 70%); }
-    to   { background: radial-gradient(ellipse at 40% 60%, #222 0%, #000 70%); }
-  }
-  .hero-content {
-    position: relative; z-index: 2;
-    opacity: 0; transform: translateY(28px);
-    animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
-  }
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hero-eyebrow {
-    font-size: 0.72rem; letter-spacing: 0.22em; color: var(--neutral-400);
-    text-transform: uppercase; margin-bottom: 20px;
-    opacity: 0; animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.05s forwards;
-  }
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(3.5rem, 11vw, 8rem);
-    font-weight: 800; letter-spacing: -0.02em; line-height: 0.95;
-    opacity: 0; animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.15s forwards;
-  }
-  .hero-sub {
-    color: var(--neutral-400); margin-top: 28px;
-    font-size: 1rem; max-width: 460px; margin-left: auto; margin-right: auto;
-    line-height: 1.75; font-weight: 300;
-    opacity: 0; animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.28s forwards;
-  }
-  .hero-actions {
-    margin-top: 40px; display: flex; gap: 16px;
-    justify-content: center; flex-wrap: wrap;
-    opacity: 0; animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;
-  }
-  .btn-primary {
-    padding: 12px 32px; background: var(--white); color: var(--black);
-    border-radius: 999px; font-size: 0.85rem; font-weight: 500;
-    border: none; cursor: pointer; font-family: var(--font-body);
-    text-decoration: none; transition: background 0.2s, transform 0.15s;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .btn-primary:hover { background: #e0e0e0; transform: translateY(-1px); }
-  .btn-outline {
-    padding: 12px 32px; background: transparent; color: var(--white);
-    border-radius: 999px; font-size: 0.85rem; font-weight: 500;
-    border: 0.5px solid rgba(255,255,255,0.3); cursor: pointer;
-    font-family: var(--font-body); text-decoration: none;
-    transition: border-color 0.2s, background 0.2s, transform 0.15s;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
-  .scroll-indicator {
-    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    opacity: 0; animation: fadeUp 1s ease 1.2s forwards;
-  }
-  .scroll-indicator span { font-size: 0.65rem; letter-spacing: 0.18em; color: var(--neutral-600); text-transform: uppercase; }
-  .scroll-line { width: 0.5px; height: 44px; background: linear-gradient(to bottom, var(--neutral-600), transparent); }
-
-  /* ── SECTIONS SHARED ── */
-  .reveal {
-    opacity: 0; transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  /* ── STATEMENT ── */
-  #statement {
-    min-height: 100vh; display: flex; align-items: center; padding: 80px 48px;
-  }
-  .statement-inner { max-width: 900px; }
-  .statement-label {
-    font-size: 0.7rem; letter-spacing: 0.2em; color: var(--neutral-600);
-    text-transform: uppercase; margin-bottom: 24px;
-  }
-  .statement-text {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4.5vw, 3.4rem);
-    font-weight: 700; line-height: 1.2; color: var(--white);
-  }
-  .statement-text em { color: var(--neutral-400); font-style: normal; }
-
-  /* ── PROJECTS ── */
-  #work { padding: 80px 0; }
-  .section-header { padding: 0 48px; margin-bottom: 64px; }
-  .section-label {
-    font-size: 0.7rem; letter-spacing: 0.2em; color: var(--neutral-600);
-    text-transform: uppercase; margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700;
-  }
-
-  .project-row {
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 70vh; border-top: 0.5px solid rgba(255,255,255,0.06);
-  }
-  .project-row:last-child { border-bottom: 0.5px solid rgba(255,255,255,0.06); }
-  .project-info {
-    display: flex; align-items: center; padding: 64px 48px;
-  }
-  .project-number {
-    font-size: 0.65rem; letter-spacing: 0.2em; color: var(--neutral-600);
-    margin-bottom: 20px;
-  }
-  .project-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 700; margin-bottom: 16px;
-  }
-  .project-desc { color: var(--neutral-400); line-height: 1.75; font-size: 0.9rem; max-width: 360px; font-weight: 300; }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-  .tag {
-    font-size: 0.7rem; letter-spacing: 0.08em;
-    padding: 4px 12px; border: 0.5px solid rgba(255,255,255,0.15);
-    border-radius: 999px; color: var(--neutral-400);
-  }
-  .project-visual {
-    background: var(--neutral-900);
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .project-visual-inner {
-    width: 80%; max-width: 320px; aspect-ratio: 16/10;
-    border: 0.5px solid rgba(255,255,255,0.08);
-    border-radius: 8px; background: #161616;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
-  }
-  .project-visual:hover .project-visual-inner { transform: scale(1.03) translateY(-4px); }
-  .project-icon { font-size: 2.5rem; opacity: 0.3; }
-
-  /* ── SKILLS ── */
-  #skills { padding: 120px 48px; }
-  .skills-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px; border: 0.5px solid rgba(255,255,255,0.06); margin-top: 64px;
-  }
-  .skill-card {
-    padding: 36px 28px; background: var(--black);
-    border: 0.5px solid rgba(255,255,255,0.06);
-    transition: background 0.3s;
-  }
-  .skill-card:hover { background: var(--neutral-900); }
-  .skill-icon { font-size: 1.5rem; margin-bottom: 16px; opacity: 0.7; }
-  .skill-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 8px; }
-  .skill-level {
-    height: 1.5px; background: rgba(255,255,255,0.08);
-    border-radius: 999px; overflow: hidden; margin-top: 12px;
-  }
-  .skill-bar {
-    height: 100%; background: var(--white);
-    width: 0; transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
-  }
-
-  /* ── CONTACT ── */
-  #contact {
-    min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 80px 48px;
-    position: relative; overflow: hidden;
-  }
-  .contact-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 80%, #151515 0%, #000 65%);
-    pointer-events: none;
-  }
-  .contact-inner { position: relative; z-index: 1; }
-  .contact-label {
-    font-size: 0.7rem; letter-spacing: 0.2em; color: var(--neutral-600);
-    text-transform: uppercase; margin-bottom: 24px;
-  }
-  .contact-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800;
-    line-height: 1; margin-bottom: 20px;
-  }
-  .contact-email {
-    font-size: 1rem; color: var(--neutral-400); margin-bottom: 48px; font-weight: 300;
-  }
-  .contact-email a { color: inherit; text-decoration: none; transition: color 0.2s; }
-  .contact-email a:hover { color: var(--white); }
-  .contact-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-  /* ── SOCIAL LINKS ── */
-  .socials {
-    display: flex; gap: 24px; margin-top: 56px; justify-content: center;
-  }
-  .social-link {
-    width: 40px; height: 40px;
-    border: 0.5px solid rgba(255,255,255,0.15);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    color: var(--neutral-400); text-decoration: none; font-size: 0.75rem;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
-  }
-  .social-link:hover {
-    border-color: var(--white); color: var(--white);
-    background: rgba(255,255,255,0.05);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 32px 48px;
-    border-top: 0.5px solid rgba(255,255,255,0.06);
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
-  }
-  footer p { font-size: 0.75rem; color: var(--neutral-600); }
-
-  /* ── MOBILE ── */
-  @media (max-width: 768px) {
-    nav { padding: 18px 24px; }
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-    .nav-links.open {
-      display: flex; flex-direction: column;
-      position: fixed; inset: 0; top: 60px;
-      background: rgba(0,0,0,0.97);
-      align-items: center; justify-content: center;
-      gap: 32px; z-index: 998;
-    }
-    .nav-links.open a { font-size: 1.2rem; }
-    .nav-cta { display: none !important; }
-
-    #statement { padding: 60px 24px; }
-    .section-header { padding: 0 24px; }
-    .project-row { grid-template-columns: 1fr; }
-    .project-visual { min-height: 240px; }
-    .project-info { padding: 40px 24px; }
-    #skills { padding: 80px 24px; }
-    #contact { padding: 80px 24px; }
-    footer { padding: 24px; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BELLSATH SIR - AI & Full Stack Developer Portfolio">
+    <meta name="author" content="BELLSATH SIR">
+    <title>BELLSATH SIR | AI & Full Stack Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- NAVBAR -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">BELLSATH SIR</a>
-  <div class="nav-links" id="navLinks">
-    <a href="#work">Work</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-    <a href="#contact" class="nav-cta">Let's talk →</a>
-  </div>
-  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Full-Stack Developer &amp; AI Builder</p>
-    <h1 class="hero-title">BELLSATH</h1>
-    <p class="hero-sub">Building high-performance, modern web applications with clean design and intelligent systems.</p>
-    <div class="hero-actions">
-      <a href="#work" class="btn-primary">View Work</a>
-      <a href="bellsath_resume.pdf" download class="btn-outline">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Resume
-      </a>
-    </div>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- STATEMENT -->
-<section id="statement">
-  <div class="statement-inner">
-    <p class="statement-label reveal">Philosophy</p>
-    <h2 class="statement-text reveal reveal-delay-1">
-      Focused on simplicity,<br>
-      <em>performance &amp; clarity.</em><br>
-      Code that ships — <em>and scales.</em>
-    </h2>
-  </div>
-</section>
-
-<!-- WORK -->
-<section id="work">
-  <div class="section-header">
-    <p class="section-label reveal">Selected Work</p>
-    <h2 class="section-title reveal reveal-delay-1">Projects</h2>
-  </div>
-
-  <!-- Project 1 -->
-  <div class="project-row">
-    <div class="project-info reveal">
-      <div>
-        <p class="project-number">01 / 03</p>
-        <h3 class="project-title">E-Commerce Platform</h3>
-        <p class="project-desc">Full-stack MERN application designed for scalability and seamless user experience. Features real-time inventory, auth, and payment integration.</p>
-        <div class="project-tags">
-          <span class="tag">MongoDB</span>
-          <span class="tag">Express</span>
-          <span class="tag">React</span>
-          <span class="tag">Node.js</span>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">BELLSATH<span class="highlight"> SIR</span></a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <!-- Dark/Light Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon moon-icon"></i>
+                    <i class="fas fa-sun sun-icon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="project-visual reveal reveal-delay-1">
-      <div class="project-visual-inner">
-        <span class="project-icon">🛍</span>
-      </div>
-    </div>
-  </div>
+    </nav>
 
-  <!-- Project 2 -->
-  <div class="project-row">
-    <div class="project-visual reveal">
-      <div class="project-visual-inner">
-        <span class="project-icon">🔍</span>
-      </div>
-    </div>
-    <div class="project-info reveal reveal-delay-1">
-      <div>
-        <p class="project-number">02 / 03</p>
-        <h3 class="project-title">AI Search System</h3>
-        <p class="project-desc">Intelligent system for identifying missing children using AI models — combining facial recognition and real-time database matching.</p>
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">TensorFlow</span>
-          <span class="tag">OpenCV</span>
-          <span class="tag">FastAPI</span>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Hi all 👋 I'm <span class="gradient-text">BELLSATH SIR</span></h1>
+                    <p class="hero-subtitle">AI & Full Stack Developer | Python | Java | Machine Learning Enthusiast</p>
+                    <div class="typing-container">
+                        <span class="typing-prefix">I'm a </span>
+                        <span class="typing-text" id="typingText"></span>
+                        <span class="cursor">|</span>
+                    </div>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Contact Me
+                        </a>
+                        <a href="bellsath_resume.pdf" class="btn btn-secondary" download>
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/BELLSATHSIR" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/bellsath-sir/" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/silver__shades.17?igsh=YWkxbzk2anI5MDU2" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:bellsath62@gmail.com" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Project 3 -->
-  <div class="project-row">
-    <div class="project-info reveal">
-      <div>
-        <p class="project-number">03 / 03</p>
-        <h3 class="project-title">Sign Language AI</h3>
-        <p class="project-desc">Real-time communication tool powered by machine learning — translating hand gestures to text instantly for accessibility.</p>
-        <div class="project-tags">
-          <span class="tag">MediaPipe</span>
-          <span class="tag">TensorFlow</span>
-          <span class="tag">React</span>
-          <span class="tag">WebRTC</span>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="project-visual reveal reveal-delay-1">
-      <div class="project-visual-inner">
-        <span class="project-icon">🤟</span>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-header" style="padding: 0;">
-    <p class="section-label reveal">What I Work With</p>
-    <h2 class="section-title reveal reveal-delay-1">Skills</h2>
-  </div>
-  <div class="skills-grid" id="skillsGrid">
-    <div class="skill-card reveal">
-      <div class="skill-icon">⚛</div>
-      <div class="skill-name">React / Next.js</div>
-      <div class="skill-level"><div class="skill-bar" data-width="92"></div></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-1">
-      <div class="skill-icon">🟩</div>
-      <div class="skill-name">Node.js / Express</div>
-      <div class="skill-level"><div class="skill-bar" data-width="88"></div></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <div class="skill-icon">🐍</div>
-      <div class="skill-name">Python / FastAPI</div>
-      <div class="skill-level"><div class="skill-bar" data-width="85"></div></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <div class="skill-icon">🤖</div>
-      <div class="skill-name">TensorFlow / AI</div>
-      <div class="skill-level"><div class="skill-bar" data-width="78"></div></div>
-    </div>
-    <div class="skill-card reveal">
-      <div class="skill-icon">🗄</div>
-      <div class="skill-name">MongoDB / SQL</div>
-      <div class="skill-level"><div class="skill-bar" data-width="83"></div></div>
-    </div>
-    <div class="skill-card reveal reveal-delay-1">
-      <div class="skill-icon">🎨</div>
-      <div class="skill-name">UI / Tailwind CSS</div>
-      <div class="skill-level"><div class="skill-bar" data-width="90"></div></div>
-    </div>
-  </div>
-</section>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About <span class="highlight">Me</span></h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="image-wrapper">
+                        <img src="profile.jpg" alt="BELLSATH SIR">
+                        <div class="glow-border"></div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3>Enthusiastic Developer & AI Innovator</h3>
+                    <p>
+                        Hello! I'm BELLSATH SIR, a passionate programmer from Trichy, Tamil Nadu, with a deep 
+                        enthusiasm for Artificial Intelligence, Machine Learning, and Full Stack Development. 
+                        I specialize in building intelligent applications that solve real-world problems.
+                    </p>
+                    <p>
+                        My journey in computer science has been driven by curiosity and innovation. From developing 
+                        AI-powered resume screening systems to creating comprehensive management applications, 
+                        I thrive on challenges that push the boundaries of technology.
+                    </p>
+                    <p>
+                        With expertise in Python, Java, and modern ML frameworks like TensorFlow and PyTorch, 
+                        I'm dedicated to continuous learning and contributing to the ever-evolving tech landscape.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <h4>8.7</h4>
+                            <p>M.Sc CGPA</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>3+</h4>
+                            <p>Projects</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>1</h4>
+                            <p>Research Paper</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-bg"></div>
-  <div class="contact-inner">
-    <p class="contact-label reveal">Get In Touch</p>
-    <h2 class="contact-title reveal reveal-delay-1">Let's work<br>together.</h2>
-    <p class="contact-email reveal reveal-delay-2">
-      <a href="mailto:bellsath62@gmail.com">bellsath62@gmail.com</a>
-    </p>
-    <div class="contact-actions reveal reveal-delay-3">
-    <a href="mailto:bellsath62@gmail.com?subject=Hiring%20Inquiry" class="btn-primary">
-        Send a message →</a>
-      <a href="bellsath_resume.pdf" download class="btn-outline">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Download Resume
-      </a>
-    </div>
-    <div class="socials reveal">
-      <a href="https://github.com/BELLSATHSIR" target="_blank" rel="noopener" class="social-link" title="GitHub">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.02c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.74-1.33-1.74-1.08-.74.08-.73.08-.73 1.2.08 1.82 1.22 1.82 1.22 1.07 1.82 2.8 1.3 3.48.99.1-.77.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-      </a>
-      <a href="https://www.linkedin.com/in/bellsath-sir/" target="_blank" rel="noopener" class="social-link" title="LinkedIn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/silver__shades.17?igsh=YWkxbzk2anI5MDU2" target="_blank" rel="noopener" class="social-link" title="Instagram">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-  <path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5C19.43 22 22 19.43 22 16.25v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm0 2h8.5A3.75 3.75 0 0 1 20 7.75v8.5A3.75 3.75 0 0 1 16.25 20h-8.5A3.75 3.75 0 0 1 4 16.25v-8.5A3.75 3.75 0 0 1 7.75 4zm8.75 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
-</svg>      </a>
-    </div>
-  </div>
-</section>
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title">My <span class="highlight">Skills</span></h2>
+            <p class="section-description">Technologies I work with</p>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fab fa-python skill-icon"></i>
+                    <h3>Python</h3>
+                    <p>Advanced</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-java skill-icon"></i>
+                    <h3>Java</h3>
+                    <p>Advanced</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-brain skill-icon"></i>
+                    <h3>TensorFlow</h3>
+                    <p>Intermediate</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-fire skill-icon"></i>
+                    <h3>PyTorch</h3>
+                    <p>Intermediate</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-robot skill-icon"></i>
+                    <h3>Keras</h3>
+                    <p>Intermediate</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-android skill-icon"></i>
+                    <h3>Kotlin</h3>
+                    <p>Intermediate</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h3>MySQL</h3>
+                    <p>Advanced</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-git-alt skill-icon"></i>
+                    <h3>Git</h3>
+                    <p>Advanced</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-fire-alt skill-icon"></i>
+                    <h3>Firebase</h3>
+                    <p>Intermediate</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-html5 skill-icon"></i>
+                    <h3>HTML/CSS</h3>
+                    <p>Advanced</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fab fa-js skill-icon"></i>
+                    <h3>JavaScript</h3>
+                    <p>Intermediate</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-code skill-icon"></i>
+                    <h3>Machine Learning</h3>
+                    <p>Advanced</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2025 Bellsath sir. All rights reserved.</p>
-  <p>Built with care &amp; clean code.</p>
-</footer>
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured <span class="highlight">Projects</span></h2>
+            <p class="section-description">Some of my recent work</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-file-alt project-icon"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>AI-Powered Resume Screener</h3>
+                        <p>
+                            An intelligent resume screening system using RAG (Retrieval-Augmented Generation) integration. 
+                            The application analyzes resumes, extracts key information, and provides intelligent matching 
+                            based on job requirements using advanced NLP techniques.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">RAG</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">Machine Learning</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                    </div>
+                </div>
 
-<script>
-  // Navbar scroll effect (fixed)
-const navbar = document.getElementById('navbar');
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <i class="fas fa-mobile-alt project-icon"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>College Department Management System</h3>
+                        <p>
+                            A comprehensive Android application designed to streamline college department operations. 
+                            Features include student management, attendance tracking, grade management, and real-time 
+                            notifications for students and faculty.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Kotlin</span>
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">MySQL</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-window.addEventListener('scroll', () => {
-  if (!navbar) return;   // ✅ fix here
+    <!-- Education & Research Section -->
+    <section class="education" id="education">
+        <div class="container">
+            <h2 class="section-title">Education & <span class="highlight">Research</span></h2>
+            <div class="education-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2025</span>
+                            <h3>M.Sc. Computer Science</h3>
+                            <p class="institution">Bishop Heber College, Trichy</p>
+                            <p class="grade">CGPA: 8.7</p>
+                        </div>
+                    </div>
 
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-});
-  // Mobile menu
-  function toggleMenu() {
-    const links = document.getElementById('navLinks');
-    links.classList.toggle('open');
-  }
-  document.getElementById('navLinks').querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
-  });
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2024</span>
+                            <h3>B.Sc. Computer Science</h3>
+                            <p class="institution">Bishop Heber College, Trichy</p>
+                            <p class="grade">CGPA: 8.0</p>
+                        </div>
+                    </div>
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        // Animate skill bars when visible
-        const bar = e.target.querySelector('.skill-bar');
-        if (bar) bar.style.width = bar.dataset.width + '%';
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  reveals.forEach(el => observer.observe(el));
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2021</span>
+                            <h3>Higher Secondary (12th)</h3>
+                            <p class="grade">Percentage: 74.5%</p>
+                        </div>
+                    </div>
 
-  // Skill bars triggered separately (parent .reveal)
-  document.querySelectorAll('.skill-card.reveal').forEach(card => {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const bar = e.target.querySelector('.skill-bar');
-          if (bar) setTimeout(() => bar.style.width = bar.dataset.width + '%', 100);
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    obs.observe(card);
-  });
-</script>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2019</span>
+                            <h3>Secondary School (10th)</h3>
+                            <p class="grade">Percentage: 68.4%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In <span class="highlight">Touch</span></h2>
+            <p class="section-description">Feel free to reach out for collaborations or just a friendly chat</p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Trichy, Tamil Nadu, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>bellsath62@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+91 8903739845</p>
+                        </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://github.com/BELLSATHSIR" target="_blank" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/bellsath-sir/" target="_blank" class="social-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/silver__shades.17?igsh=YWkxbzk2anI5MDU2" target="_blank" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:bellsath62@gmail.com" class="social-icon">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm" action="https://formspree.io/f/xayzabcd" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" id="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Made with <i class="fas fa-heart"></i> by BELLSATH SIR | <span id="currentYear"></span></p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/918903739845" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
 </body>
 </html>
